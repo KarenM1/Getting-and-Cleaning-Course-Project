@@ -73,4 +73,4 @@ groupedData<-group_by(combinedMeanStd,subjectid,activity)
 
 #create a new tidy data set that shows the mean of each variable for each activity per subject
 tidySetofMeans<-summarize_all(groupedData,mean)
-write.csv(tidySetofMeans,"tidySetofMeans.csv")
+write.table(tidySetofMeans,"tidySetofMeans.txt",row.names = FALSE)
