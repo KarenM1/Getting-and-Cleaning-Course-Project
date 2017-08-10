@@ -1,10 +1,25 @@
-# Downloaded the source file from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
-# to a local working directory, extracted the zipped files, and copied the text files to a single directory, runAnalysis.
-# set working directory to the runAnalysis directory
+# Download the source file from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
+# and unzip it, with thanks to lgreski Tutorial: Downloading files at https://github.com/lgreski/datasciencectacontent/blob/master/markdown/rprog-downloadingFiles.md()
 
-setwd("C:/Users/kmassey/datasciencecoursera/getdata%2Fprojectfiles%2FUCI HAR Dataset/UCI HAR Dataset/runAnalysis")
+setwd("C:/Users/kmassey/datasciencecoursera/Course Project")
+url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+download.file(url,
+              destfile='HAR.zip',
+              mode="wb") # "wb" means "write binary," and is used for binary files
+unzip(zipfile = "HAR.zip") # unpack the files into subdirectories 
 
-# Used read.table to read the txt files into dataframes.
+#create a new directory and copy the test and train files to it
+dir.create("runAnalysis")
+targetdir <- c("C:/Users/kmassey/datasciencecoursera/Course Project/runAnalysis")
+setwd("C:/Users/kmassey/datasciencecoursera/Course Project/UCI HAR Dataset/test")
+filestocopy<-c("subject_test.txt","X_test.txt","y_test.txt")
+file.copy(from=filestocopy, to=targetdir)
+setwd("C:/Users/kmassey/datasciencecoursera/Course Project/UCI HAR Dataset/train")
+filestocopy<-c("subject_train.txt","X_train.txt","y_train.txt")
+file.copy(from=filestocopy, to=targetdir)
+setwd("C:/Users/kmassey/datasciencecoursera/Course Project/runAnalysis")
+
+# read the txt files into dataframes.
 
 testFile<- read.table("X_test.txt", header = FALSE, sep = "") # data file for test data
 trainFile<- read.table("X_train.txt", header = FALSE, sep = "") # data file for train data
@@ -58,3 +73,4 @@ groupedData<-group_by(combinedMeanStd,subjectid,activity)
 
 #create a new tidy data set that shows the mean of each variable for each activity per subject
 tidySetofMeans<-summarize_all(groupedData,mean)
+write.csv(tidySetofMeans,"tidySetofMeans.csv")
