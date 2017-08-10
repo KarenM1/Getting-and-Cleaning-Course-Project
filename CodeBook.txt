@@ -161,4 +161,4 @@ Steps to create the tidySetofMeans dataset are these:
 9.  Create a tidy data set with the average of each variable for each activity and each subject - this item responds to requirement #5 of the rubric.
     groupedData<-group_by(combinedMeanStd,subjectid,activity)
     tidySetofMeans<-summarize_all(groupedData,mean)
-    write.csv(tidySetofMeans,"tidySetofMeans.csv")
+    write.table(tidySetofMeans,"tidySetofMeans.txt",row.names = FALSE)
